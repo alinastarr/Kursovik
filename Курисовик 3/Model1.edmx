@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище coffeeModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Autorization">
+          <Key>
+            <PropertyRef Name="id_пользвателя" />
+          </Key>
+          <Property Name="id_пользвателя" Type="int" Nullable="false" />
+          <Property Name="Логин" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ingridients">
+          <Key>
+            <PropertyRef Name="id_ингридиента" />
+          </Key>
+          <Property Name="id_ингридиента" Type="int" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Количество" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id_товара" />
+          </Key>
+          <Property Name="id_товара" Type="int" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Описание" Type="nvarchar" MaxLength="100" />
+          <Property Name="Путь_к_изображению" Type="nvarchar" MaxLength="100" />
+          <Property Name="Вес" Type="float" Nullable="false" />
+          <Property Name="Единица_измерения" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="Цена" Type="float" Nullable="false" />
+          <Property Name="id_type" Type="int" />
+        </EntityType>
+        <EntityType Name="Structure">
+          <Key>
+            <PropertyRef Name="id_состава" />
+          </Key>
+          <Property Name="id_состава" Type="int" Nullable="false" />
+          <Property Name="id_товара" Type="int" Nullable="false" />
+          <Property Name="id_ингридиента" Type="int" Nullable="false" />
+          <Property Name="Количество" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type1">
+          <Key>
+            <PropertyRef Name="id_type" />
+          </Key>
+          <Property Name="id_type" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_products_Type1">
+          <End Role="Type1" Type="Self.Type1" Multiplicity="0..1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type1">
+              <PropertyRef Name="id_type" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="id_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_ingridients">
+          <End Role="ingridients" Type="Self.ingridients" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingridients">
+              <PropertyRef Name="id_ингридиента" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_ингридиента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_products">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id_товара" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_товара" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище coffeeModelContainer">
+          <EntitySet Name="Autorization" EntityType="Self.Autorization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ingridients" EntityType="Self.ingridients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Structure" EntityType="Self.Structure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type1" EntityType="Self.Type1" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_products_Type1" Association="Self.FK_products_Type1">
+            <End Role="Type1" EntitySet="Type1" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_ingridients" Association="Self.FK_Structure_ingridients">
+            <End Role="ingridients" EntitySet="ingridients" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_products" Association="Self.FK_Structure_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="coffeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Autorization">
+          <Key>
+            <PropertyRef Name="id_пользвателя" />
+          </Key>
+          <Property Name="id_пользвателя" Type="Int32" Nullable="false" />
+          <Property Name="Логин" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ingridients">
+          <Key>
+            <PropertyRef Name="id_ингридиента" />
+          </Key>
+          <Property Name="id_ингридиента" Type="Int32" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Количество" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Structure" Relationship="Self.FK_Structure_ingridients" FromRole="ingridients" ToRole="Structure" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id_товара" />
+          </Key>
+          <Property Name="id_товара" Type="Int32" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Описание" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Путь_к_изображению" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Вес" Type="Double" Nullable="false" />
+          <Property Name="Единица_измерения" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Цена" Type="Double" Nullable="false" />
+          <Property Name="id_type" Type="Int32" />
+          <NavigationProperty Name="Type1" Relationship="Self.FK_products_Type1" FromRole="products" ToRole="Type1" />
+          <NavigationProperty Name="Structure" Relationship="Self.FK_Structure_products" FromRole="products" ToRole="Structure" />
+        </EntityType>
+        <EntityType Name="Structure">
+          <Key>
+            <PropertyRef Name="id_состава" />
+          </Key>
+          <Property Name="id_состава" Type="Int32" Nullable="false" />
+          <Property Name="id_товара" Type="Int32" Nullable="false" />
+          <Property Name="id_ингридиента" Type="Int32" Nullable="false" />
+          <Property Name="Количество" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ingridients" Relationship="Self.FK_Structure_ingridients" FromRole="Structure" ToRole="ingridients" />
+          <NavigationProperty Name="products" Relationship="Self.FK_Structure_products" FromRole="Structure" ToRole="products" />
+        </EntityType>
+        <EntityType Name="Type1">
+          <Key>
+            <PropertyRef Name="id_type" />
+          </Key>
+          <Property Name="id_type" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="products" Relationship="Self.FK_products_Type1" FromRole="Type1" ToRole="products" />
+        </EntityType>
+        <Association Name="FK_Structure_ingridients">
+          <End Role="ingridients" Type="Self.ingridients" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingridients">
+              <PropertyRef Name="id_ингридиента" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_ингридиента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_Type1">
+          <End Role="Type1" Type="Self.Type1" Multiplicity="0..1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type1">
+              <PropertyRef Name="id_type" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="id_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Structure_products">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="Structure" Type="Self.Structure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id_товара" />
+            </Principal>
+            <Dependent Role="Structure">
+              <PropertyRef Name="id_товара" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="coffeeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autorization" EntityType="Self.Autorization" />
+          <EntitySet Name="ingridients" EntityType="Self.ingridients" />
+          <EntitySet Name="products" EntityType="Self.products" />
+          <EntitySet Name="Structure" EntityType="Self.Structure" />
+          <EntitySet Name="Type1" EntityType="Self.Type1" />
+          <AssociationSet Name="FK_Structure_ingridients" Association="Self.FK_Structure_ingridients">
+            <End Role="ingridients" EntitySet="ingridients" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_Type1" Association="Self.FK_products_Type1">
+            <End Role="Type1" EntitySet="Type1" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Structure_products" Association="Self.FK_Structure_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="Structure" EntitySet="Structure" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="coffeeModel.sysdiagrams" />
+        </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище coffeeModelContainer" CdmEntityContainer="coffeeEntities">
+          <EntitySetMapping Name="Autorization">
+            <EntityTypeMapping TypeName="coffeeModel.Autorization">
+              <MappingFragment StoreEntitySet="Autorization">
+                <ScalarProperty Name="id_пользвателя" ColumnName="id_пользвателя" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ingridients">
+            <EntityTypeMapping TypeName="coffeeModel.ingridients">
+              <MappingFragment StoreEntitySet="ingridients">
+                <ScalarProperty Name="id_ингридиента" ColumnName="id_ингридиента" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="coffeeModel.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="id_товара" ColumnName="id_товара" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Описание" ColumnName="Описание" />
+                <ScalarProperty Name="Путь_к_изображению" ColumnName="Путь_к_изображению" />
+                <ScalarProperty Name="Вес" ColumnName="Вес" />
+                <ScalarProperty Name="Единица_измерения" ColumnName="Единица_измерения" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Structure">
+            <EntityTypeMapping TypeName="coffeeModel.Structure">
+              <MappingFragment StoreEntitySet="Structure">
+                <ScalarProperty Name="id_состава" ColumnName="id_состава" />
+                <ScalarProperty Name="id_товара" ColumnName="id_товара" />
+                <ScalarProperty Name="id_ингридиента" ColumnName="id_ингридиента" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type1">
+            <EntityTypeMapping TypeName="coffeeModel.Type1">
+              <MappingFragment StoreEntitySet="Type1">
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="coffeeModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

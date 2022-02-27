@@ -1,0 +1,56 @@
+﻿<Page x:Class="Курисовик_3.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Курисовик_3"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="377"></RowDefinition>
+            <RowDefinition Height="73"></RowDefinition>
+        </Grid.RowDefinitions>
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5 5 5 5 " Text="Введите название для поиска:" Width="175" TextAlignment="Right" Foreground="White"/>
+                <TextBox Width="225" x:Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock  Margin="5 5 5 5 " Text="Выберите тип:" Width="175" TextAlignment="Right" Foreground="White" />
+                <ComboBox Width="225" x:Name="Combotype"   DisplayMemberPath="name"/>
+            </StackPanel>
+        </WrapPanel>
+        <DataGrid  Name="DGridProducts" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,56,0,0" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Наименование}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Type1.name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Описание}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Вес" Binding="{Binding Вес}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Единица измерения" Binding="{Binding Единица_измерения}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Цена}"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+
+                            <Button Content="Редактировать" Background="#FFF4620F" Name="BtnAdd" Click="BtnAdd_Click"  ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+
+                            <Button Content="Открыть" Background="#FFF4620F" Name="Btnopen"   ></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <Button x:Name="BtnAdd" Content="Добавить" HorizontalAlignment="Left" Margin="30,16,0,0" Grid.Row="1" VerticalAlignment="Top" Height="34" Width="120" Background="#FFF4620F" BorderBrush="#FFF4620F" Foreground="White" FontSize="16" Click="BtnAdd_Click" />
+        <Button x:Name="ButtonDel" Content="Удалить" HorizontalAlignment="Right" Margin="670,16,0,0" Grid.Row="1" VerticalAlignment="Top" Height="34" Width="120" Background="White" BorderBrush="White" Foreground="Black" FontSize="16"  Click="ButtonDel_Click" />
+    </Grid>
+</Page>
